@@ -1,0 +1,38 @@
+---
+title: "4.2 Exercise"
+author: "Sharath Chandra Tummanapally"
+date: "5/7/2022"
+---
+
+```{r setup, include=FALSE}
+# Loading data to data frame.
+CrimeRatesByState_df <- read.csv("ex4-2/crimerates-by-state-2005.csv")
+```
+
+```{r}
+# Loading Libraries
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+# Dropping United states and District of columbia from dataframe.
+CrimeRatesByState_df2<-CrimeRatesByState_df[!(CrimeRatesByState_df$state=="United States" | CrimeRatesByState_df$state=="District of Columbia"),]
+head(CrimeRatesByState_df2)
+```
+
+
+```{r}
+# Scatterplot.
+ggplot(CrimeRatesByState_df2, aes(x=burglary, y=larceny_theft)) + geom_point() + xlab("Burglary per 100,000 Population") + ylab("Larceny theft per 100,000 Population") + ggtitle("Burglary vs. Larceny theft in the U.S.")
+```
+
+```{r}
+# BubblePlot.
+ggplot(CrimeRatesByState_df2, aes(x=burglary, y=larceny_theft, size=population)) + geom_point() + xlab("Burglary per 100,000 Population") + ylab("Larceny theft per 100,000 Population") + ggtitle("Burglary vs. Larceny theft in the U.S.")
+```
+
+```{r}
+# DensityPlot.
+ggplot(CrimeRatesByState_df2, aes(x=burglary)) + geom_density(colour='green')+ xlab("Murders per 100,000 Population") + ylab("Density") + ggtitle("Burglary in the U.S. rate.")
+```
