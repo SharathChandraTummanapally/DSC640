@@ -1,0 +1,56 @@
+---
+title: "6.2 Exercise"
+author: "Sharath Chandra Tummanapally"
+date: "6/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# Loading the data into dataframes.
+edu_df <- read.csv("ex6-2/education.csv")
+```
+
+```{r}
+# Loading Libraries.
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+```
+
+
+```{r}
+# Plotting histogram.
+data <- edu_df$percent_graduates_sat
+hist(data, ylab='No. of states with SAT graduates in percentages', xlab='Percentage', main= 'SAT Graduates percentage of all states')
+```
+
+```{r}
+# Plotting boxplot.
+data <- edu_df[c(2:4)]
+boxplot(data, ylab='Scores', main= 'Reading, Math, Writing of all states.')
+```
+
+```{r}
+# Plotting bullet chart.
+data <- tail(edu_df)
+
+data %>% 
+  ggplot(aes(math+reading, state))  + 
+  geom_bar(stat='identity', fill="light blue", width=0.5) +
+  geom_bar(stat='identity',  fill="dark blue", aes(reading, state), width=0.2) +
+  labs(title='Bullet Graph', x = 'Total Score', y='State')
+```
+
+```{r}
+# Plotting column chart.
+data <- tail(edu_df[c(1:4)])
+
+barplot(t(as.matrix(data[c(2:4)])), names.arg = data$state, xlab = "State", ylab = "Scores", beside = TRUE)
+```
+
+
+
+
+
+
+
