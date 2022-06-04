@@ -1,0 +1,46 @@
+---
+title: "5.2 Exercise"
+author: "Sharath Chandra Tummanapally"
+date: "6/1/2022"
+---
+
+```{r setup, include=FALSE}
+# Loading the data into dataframes.
+costco_df <- read.csv("ex5-2/costcos-geocoded.csv")
+ppg_df <- read.csv("ex5-2/ppg2008.csv")
+```
+
+```{r}
+# Loading Libraries.
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(sf)
+library(mapview)
+```
+
+
+```{r}
+# Plotting heatmap.
+data <- as.matrix(ppg_df[, -1])
+names(ppg_df) <- make.names(names(ppg_df), unique=TRUE)
+rownames(data) <- ppg_df$Name
+heatmap(data, Colv = NA, Rowv = NA, scale="column", main= 'NBA Performance - 2008')
+```
+
+```{r}
+# Plotting Spatial chart.
+mapview(costco_df, xcol='Longitude', ycol = 'Latitude', crs=4269, grid = FALSE, zcol = 'State') 
+```
+
+```{r}
+# Plotting Contour Chart.
+ggplot(data = ppg_df, aes(x=G, y=PTS)) +
+    ylim(0, 5000) + 
+    theme_bw() + 
+    geom_point(alpha = 0.1, col="blue") + 
+    geom_density2d(color= "purple") + 
+    ggtitle("2008 NBA - G vs PTS") + 
+    theme(plot.title = element_text(hjust = 0.5)) +
+    labs(x="G", y="PTS") + ylim(0, 35)
+```
